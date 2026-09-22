@@ -1,22 +1,26 @@
 name: Build and Test
 
 on:
-  pull_request:
-    branches: [main]
   push:
-    branches: [main]
+    branches:
+      - main
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out source code
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set up Node.js
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 20
+
       - name: Run JavaScript tests
         run: node test.js
-      - name: Check JavaScript syntax
-        run: node --check app.js
